@@ -1,11 +1,6 @@
 import { useState } from "react";
 import "./App.css";
 
-import { ElevenLabsClient } from "elevenlabs";
-const client = new ElevenLabsClient({
-  apiKey: import.meta.env.VITE_ELEVENLABS_API_KEY,
-});
-
 function App() {
   const [topic, setTopic] = useState("");
   const [scriptData, setScriptData] = useState("");
@@ -14,7 +9,7 @@ function App() {
     try {
       setLoading(true);
       const response = await fetch(
-        "http://localhost:8080/api/podcast/script/generate",
+        `${import.meta.VITE_API_URL}/podcast/script/generate`,
         {
           method: "POST",
           headers: {
@@ -52,23 +47,23 @@ function App() {
     }
   };
 
-  const handleListen = async () => {
-    try {
-      const response = await client.textToSpeech.convert(
-        "JBFqnCBsd6RMkjVDRZzb",
-        {
-          output_format: "mp3_44100_128",
+  // const handleListen = async () => {
+  //   try {
+  //     const response = await client.textToSpeech.convert(
+  //       "JBFqnCBsd6RMkjVDRZzb",
+  //       {
+  //         output_format: "mp3_44100_128",
 
-          text: scriptData,
+  //         text: scriptData,
 
-          model_id: "eleven_multilingual_v2",
-        }
-      );
-      console.log("Generated audio:\n", response);
-    } catch (error) {
-      console.error("Error generating audio:", error);
-    }
-  };
+  //         model_id: "eleven_multilingual_v2",
+  //       }
+  //     );
+  //     console.log("Generated audio:\n", response);
+  //   } catch (error) {
+  //     console.error("Error generating audio:", error);
+  //   }
+  // };
 
   return (
     <>
